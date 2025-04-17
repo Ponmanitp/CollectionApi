@@ -17,7 +17,7 @@ namespace CollectionApi.Migrations
                 {
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CatergoryUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CategoryUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +35,7 @@ namespace CollectionApi.Migrations
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Price = table.Column<float>(type: "real", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    PostedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PostedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsVisible = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

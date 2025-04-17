@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CollectionApi.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250409061552_Init")]
+    [Migration("20250417093815_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -35,7 +35,7 @@ namespace CollectionApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CatergoryUrl")
+                    b.Property<string>("CategoryUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -68,7 +68,7 @@ namespace CollectionApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PostedDate")
+                    b.Property<DateTime?>("PostedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<float>("Price")

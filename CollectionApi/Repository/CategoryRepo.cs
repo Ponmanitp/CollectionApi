@@ -1,32 +1,38 @@
 ﻿using CollectionApi.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
-namespace CollectionApi.Repository
+namespace CollectionApi.Repository;
+
+public class CategoryRepo(ApplicationDBContext dbContext)
 {
-    public class CategoryRepo(ApplicationDBContext dbContext)
+    public async Task<List<Category>> GetCategoryList()
+        => await dbContext.Categories.ToListAsync();
+
+    public async Task<Category?> GetCategoryByName(string categoryName)
+        => await dbContext.Categories.FirstOrDefaultAsync(c => c.CategoryName == categoryName);
+
+    public async Task<Category?> AddCategory(Category category)
     {
-        public async Task<List<Category>> GetCategoryList() 
-            => await dbContext.Categories.ToListAsync();
+        var existingCategory = await GetCategoryByName(category.CategoryName);
+        if (existingCategory != null)
+            throw new BadHttpRequestException("Category already exists");
+        dbContext.Categories.Add(category);
+        await dbContext.SaveChangesAsync();
+        return category;
+    }
 
-        public async Task<Category?> GetCategoryByName(string name) 
-            => await dbContext.Categories.FirstOrDefaultAsync(c => c.CategoryName == name);
+    public async Task<Category?> EditCategory(Category category)
+    {
+        dbContext.Categories.Update(category);
+        await dbContext.SaveChangesAsync();
+        return category;
+    }
 
-        public async Task<Category?> AddCategory(Category category)
-        {
-            var existing = await GetCategoryByName(category.CategoryName)
-                ?? throw new BadHttpRequestException("Category already exists");
-            dbContext.Categories.Add(category);
-            await dbContext.SaveChangesAsync();
-            return category;
-        }
-
-        public async void DeleteCategory(string name)
-        {
-            var category = dbContext.Categories.FirstOrDefault(c => c.CategoryName == name)
-                ?? throw new BadHttpRequestException("Category not found");
-                dbContext.Categories.Remove(category);
-                await dbContext.SaveChangesAsync();
-        }
+    public async void DeleteCategory(string categoryName)
+    {
+        var category = dbContext.Categories.FirstOrDefault(c => c.CategoryName == categoryName)
+            ?? throw new BadHttpRequestException("Category not found");
+        dbContext.Categories.Remove(category);
+        await dbContext.SaveChangesAsync();
     }
 }
