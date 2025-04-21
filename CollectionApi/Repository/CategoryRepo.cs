@@ -28,7 +28,7 @@ public class CategoryRepo(ApplicationDBContext dbContext)
         return category;
     }
 
-    public async void DeleteCategory(string categoryName)
+    public async Task DeleteCategory(string categoryName)
     {
         var category = dbContext.Categories.FirstOrDefault(c => c.CategoryName == categoryName)
             ?? throw new BadHttpRequestException("Category not found");

@@ -53,12 +53,11 @@ public class CategoryController( CategoryRepo categoryRepo) : RootController
     [HttpDelete("{categoryName}", Name = nameof(DeleteCategoryAsync))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task DeleteCategoryAsync(string categoryName)
     {
         var deleteCategory = await categoryRepo.GetCategoryByName(categoryName)
                 ?? throw new KeyNotFoundException(message: "Category not found");
-        categoryRepo.DeleteCategory(deleteCategory.CategoryName);
+        await categoryRepo.DeleteCategory(deleteCategory.CategoryName);
         Response.StatusCode = StatusCodes.Status204NoContent;
     }
 }
