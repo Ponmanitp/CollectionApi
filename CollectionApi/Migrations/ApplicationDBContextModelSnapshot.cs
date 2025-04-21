@@ -41,7 +41,7 @@ namespace CollectionApi.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("CollectionApi.Models.ItemDetails", b =>
+            modelBuilder.Entity("CollectionApi.Models.Collections", b =>
                 {
                     b.Property<Guid>("ItemId")
                         .ValueGeneratedOnAdd()
@@ -54,7 +54,7 @@ namespace CollectionApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -78,10 +78,10 @@ namespace CollectionApi.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ItemDetails");
+                    b.ToTable("Collections");
                 });
 
-            modelBuilder.Entity("CollectionApi.Models.ItemDetails", b =>
+            modelBuilder.Entity("CollectionApi.Models.Collections", b =>
                 {
                     b.HasOne("CollectionApi.Models.Category", "Category")
                         .WithMany()

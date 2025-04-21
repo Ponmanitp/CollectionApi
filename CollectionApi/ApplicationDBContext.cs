@@ -5,7 +5,7 @@ namespace CollectionApi;
 public class ApplicationDBContext(DbContextOptions options) : DbContext(options)
 {
     public static string Schema { get; set; } = "Collections";
-    public DbSet<ItemDetails> ItemDetails { get; set; }
+    public DbSet<Collections> Collections { get; set; }
     public DbSet<Category> Categories { get; set; }
 
     //protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -5,34 +5,31 @@ using Microsoft.AspNetCore.Mvc;
 namespace CollectionApi.Controllers;
 
 [Route(PathController)]
-public class ItemDetailsController(ItemDetailsRepo itemDetailsRepo) : RootController
+public class CollectionsController(CollectionsRepo collectionsRepo) : RootController
 {
     [HttpGet("{itemId}", Name = nameof(GetItemDetailsByIdAsync))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ItemDetails> GetItemDetailsByIdAsync(Guid itemId)
+    public async Task<Collections> GetItemDetailsByIdAsync(Guid itemId)
     {
-        var ItemDetails = await itemDetailsRepo.GetItemDetailsByIdAsync(itemId)
+        var ItemDetails = await collectionsRepo.GetItemDetailsByIdAsync(itemId)
                 ?? throw new KeyNotFoundException("Item not found");
         return ItemDetails;
     }
 
     [HttpGet(Name = nameof(GetAllItemDetailsAsync))]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<List<ItemDetails>> GetAllItemDetailsAsync()
+    public async Task<List<Collections>> GetAllItemDetailsAsync()
     {
-        var ItemDetails = await itemDetailsRepo.GetAllItemDetailsAsync();
+        var ItemDetails = await collectionsRepo.GetAllItemDetailsAsync();
         return ItemDetails;
     }
 
     [HttpPost(Name = nameof(AddItemDetailsAsync))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ItemDetails> AddItemDetailsAsync(ItemDetails itemDetails)
+    public async Task<Collections> AddItemDetailsAsync(Collections itemDetails)
     {
-
-        var addItem = await itemDetailsRepo.AddItemDetailsAsync(itemDetails)
+        var addItem = await collectionsRepo.AddItemDetailsAsync(itemDetails)
                 ?? throw new KeyNotFoundException("Item not found");
         return addItem;
     }
@@ -40,11 +37,11 @@ public class ItemDetailsController(ItemDetailsRepo itemDetailsRepo) : RootContro
     [HttpPut(Name = nameof(UpdateItemDetailsAsync))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ItemDetails> UpdateItemDetailsAsync(ItemDetails itemDetails)
+    public async Task<Collections> UpdateItemDetailsAsync(Collections itemDetails)
     {
-        var getExistingItem = await itemDetailsRepo.GetItemDetailsByIdAsync(itemDetails.ItemId)
+        var getExistingItem = await collectionsRepo.GetItemDetailsByIdAsync(itemDetails.ItemId)
             ?? throw new KeyNotFoundException("Item not found");
-        var updateItem = await itemDetailsRepo.UpdateItemDetailsAsync(getExistingItem);
+        var updateItem = await collectionsRepo.UpdateItemDetailsAsync(getExistingItem);
         return updateItem;
     }
 
@@ -53,9 +50,9 @@ public class ItemDetailsController(ItemDetailsRepo itemDetailsRepo) : RootContro
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task DeleteItemDetailsAsync(Guid itemId)
     {
-        var getExistingItem = await itemDetailsRepo.GetItemDetailsByIdAsync(itemId)
+        var getExistingItem = await collectionsRepo.GetItemDetailsByIdAsync(itemId)
             ?? throw new KeyNotFoundException("Item not found");
-        await itemDetailsRepo.DeleteItemDetailsAsync(getExistingItem.ItemId);
+        await collectionsRepo.DeleteItemDetailsAsync(getExistingItem.ItemId);
         Response.StatusCode = StatusCodes.Status204NoContent;
     }
 }

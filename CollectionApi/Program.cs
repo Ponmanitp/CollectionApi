@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ItemDetailsRepo>()
+builder.Services.AddScoped<CollectionsRepo>()
                 .AddScoped<CategoryRepo>();
 
 builder.Services.AddDbContext<ApplicationDBContext>(options =>

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CollectionApi.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250417093815_Init")]
+    [Migration("20250421122859_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace CollectionApi.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("CollectionApi.Models.ItemDetails", b =>
+            modelBuilder.Entity("CollectionApi.Models.Collections", b =>
                 {
                     b.Property<Guid>("ItemId")
                         .ValueGeneratedOnAdd()
@@ -57,7 +57,7 @@ namespace CollectionApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -81,10 +81,10 @@ namespace CollectionApi.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ItemDetails");
+                    b.ToTable("Collections");
                 });
 
-            modelBuilder.Entity("CollectionApi.Models.ItemDetails", b =>
+            modelBuilder.Entity("CollectionApi.Models.Collections", b =>
                 {
                     b.HasOne("CollectionApi.Models.Category", "Category")
                         .WithMany()
